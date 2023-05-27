@@ -12,38 +12,81 @@ function getComputerChoice(){
 
 
 
-
-
+let p=0;
+let c=0;
+let count = 0;
 
 
 function playRound(playerSelection,computerSelection){
     let pChoice = playerSelection.toLowerCase();
+    let t = document.querySelector(".text")
+    
     if (playerSelection===computerSelection){
-        return "It's a draw";
+        t.textContent = `It's a draw, Player Score: ${p}, Computer Score: ${c}`;
     } else if (pChoice==="rock" && computerSelection==="scissor"){
-        return "You won! Rock broke Scissor";
+        p++;
+        t.textContent = `You won! Rock broke Scissor, Player Score: ${p}, Computer Score: ${c}`;
     } else if (pChoice==="rock" && computerSelection==="paper"){
-        return "You lose! Paper wraps Rock";
+        c++;
+        t.textContent = `You lose! Paper wraps Rock, Player Score: ${p}, Computer Score: ${c}` ;
     } else if (pChoice==="scissor" && computerSelection==="paper"){
-        return "You won! Scissor cuts Paper";
+        p++;
+        t.textContent = `You won! Scissor cuts Paper, Player Score: ${p}, Computer Score: ${c}`;
     } else if (pChoice==="scissor" && computerSelection==="rock"){
-        return "You lose! Rock broke Scissor";
+        c++;
+        t.textContent = `You lose! Rock broke Scissor, Player Score: ${p}, Computer Score: ${c}`;
     } else if (pChoice==="paper" && computerSelection==="rock"){
-        return "You won! Paper wraps Rock";
+        p++;
+        t.textContent = `You won! Paper wraps Rock, Player Score: ${p}, Computer Score: ${c}`;
     } else if (pChoice==="paper" && computerSelection==="scissor"){
-        return "You lose! Scissor cuts Paper";
+        c++;
+        t.textContent = `You lose! Scissor cuts Paper, Player Score: ${p}, Computer Score: ${c}`; 
     }
+    if(p===5 || c===5){
+        if(p===5){
+            t.textContent = `Game Over! Player won`;
+        } 
+        else if(c===5) {
+            t.textContent = `Game Over! Computer won`;
+        }
+        return;
+        }
 }
 
 function game(){
-    let playerSelection = prompt("Enter your choice: ");
     let computerSelection = getComputerChoice();
     console.log(playerSelection,computerSelection)
     return playRound(playerSelection,computerSelection);
 }
 
-console.log(game());
-console.log(game());
-console.log(game());
-console.log(game());
-console.log(game());
+const btns = document.querySelectorAll("button");
+
+count=0;
+
+btns.forEach(btn=>btn.addEventListener("click",function(e){
+    console.log(playRound(e.target.className,getComputerChoice()));
+    
+}));
+
+const body = document.querySelector("body");
+
+const div = document.createElement("div");
+body.insertBefore(div,body.children[3])
+console.log(body.children[3]);
+const h1 = document.createElement("h1");
+h1.classList.add("text");
+div.appendChild(h1);
+let new_btn = document.createElement("button");
+new_btn.classList.add("replay")
+new_btn.textContent = "Play Again"
+body.insertBefore(new_btn,body.children[3])
+new_btn.addEventListener("click",function(){
+location.reload();
+})
+
+
+// console.log(game());
+// console.log(game());
+// console.log(game());
+// console.log(game());
+// console.log(game());
